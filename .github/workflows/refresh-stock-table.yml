@@ -37,8 +37,8 @@ jobs:
 
       - name: Commit refreshed outputs
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Merlyvia"
+          git config user.email "185599766+mmualim@users.noreply.github.com"
           git add outputs/stock_closing_prices.csv outputs/stock_closing_prices.xlsx outputs/stock_closing_prices.html
           if git diff --cached --quiet; then
             echo "No output changes to commit."

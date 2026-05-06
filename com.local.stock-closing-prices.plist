@@ -6,10 +6,10 @@
   <string>com.local.stock-closing-prices</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of/refresh_stock_closing_prices.sh</string>
+    <string>/Users/merlyviamualim/Documents/Codex/HKEX SGX Stock Closing Prices/refresh_stock_closing_prices.sh</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of</string>
+  <string>/Users/merlyviamualim/Documents/Codex/HKEX SGX Stock Closing Prices</string>
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key>
@@ -18,8 +18,8 @@
     <integer>30</integer>
   </dict>
   <key>StandardOutPath</key>
-  <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of/outputs/refresh.log</string>
+  <string>/Users/merlyviamualim/Documents/Codex/HKEX SGX Stock Closing Prices/outputs/refresh.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of/outputs/refresh.err.log</string>
+  <string>/Users/merlyviamualim/Documents/Codex/HKEX SGX Stock Closing Prices/outputs/refresh.err.log</string>
 </dict>
 </plist>
