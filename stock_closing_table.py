@@ -220,11 +220,14 @@ def build_output_table(
                 change = pd.NA
                 pct_change = pd.NA
             else:
-                close = previous_values.iloc[-1]
+                raw_close = previous_values.iloc[-1]
                 prior_values = series.loc[:current_date].dropna().iloc[:-1]
-                prior_close = prior_values.iloc[-1] if not prior_values.empty else pd.NA
-                change = close - prior_close if not pd.isna(prior_close) else pd.NA
-                pct_change = (change / prior_close) * 100 if not pd.isna(prior_close) and prior_close else pd.NA
+                raw_prior_close = prior_values.iloc[-1] if not prior_values.empty else pd.NA
+                decimals = price_decimals(raw_close, raw_prior_close)
+                close = rounded_number(raw_close, decimals)
+                prior_close = rounded_number(raw_prior_close, decimals)
+                change = rounded_number(close - prior_close, decimals) if not pd.isna(prior_close) else pd.NA
+                pct_change = rounded_number((change / prior_close) * 100, 2) if not pd.isna(prior_close) and prior_close else pd.NA
 
             date_label = current_date.isoformat()
             row[f"{date_label} Close"] = close
@@ -235,22 +238,37 @@ def build_output_table(
 
     table = pd.DataFrame(rows)
     number_columns = [column for column in table.columns if column not in {"Sector", "Ticker", "Company Name"}]
-    table[number_columns] = table[number_columns].astype("Float64").round(2)
+    table[number_columns] = table[number_columns].astype("Float64")
     return table, [date_value.isoformat() for date_value in display_dates]
 
 
-def format_price(value: object) -> str:
+def price_decimals(*values: object) -> int:
+    valid_values = [abs(float(value)) for value in values if not pd.isna(value)]
+    if valid_values and min(valid_values) < 1:
+        return 3
+    return 2
+
+
+def rounded_number(value: object, decimals: int) -> object:
+    if pd.isna(value):
+        return pd.NA
+    rounded = round(float(value), decimals)
+    return 0.0 if rounded == 0 else rounded
+
+
+def format_price(value: object, decimals: int | None = None) -> str:
     if pd.isna(value):
         return ""
-    return f"{float(value):,.2f}"
+    places = decimals if decimals is not None else price_decimals(value)
+    return f"{float(value):,.{places}f}"
 
 
-def format_change(value: object) -> str:
+def format_change(value: object, decimals: int = 2) -> str:
     if pd.isna(value):
         return ""
     number = float(value)
     sign = "+" if number > 0 else ""
-    return f"{sign}{number:,.2f}"
+    return f"{sign}{number:,.{decimals}f}"
 
 
 def format_percent(value: object) -> str:
@@ -304,8 +322,9 @@ def render_html(table: pd.DataFrame, dates: list[str], title: str, source_note: 
             change = row[f"{date_value} Change"]
             pct = row[f"{date_value} Change %"]
             cls = change_class(change)
-            cells.append(f"<td class=\"day-start\">{format_price(close)}</td>")
-            cells.append(f"<td class=\"{cls}\">{format_change(change)}</td>")
+            decimals = price_decimals(close)
+            cells.append(f"<td class=\"day-start\">{format_price(close, decimals)}</td>")
+            cells.append(f"<td class=\"{cls}\">{format_change(change, decimals)}</td>")
             cells.append(f"<td class=\"{cls}\">{format_percent(pct)}</td>")
         rows_html.append(f"<tr>{''.join(cells)}</tr>")
 
