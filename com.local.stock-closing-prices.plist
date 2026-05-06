@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.local.stock-closing-prices</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of/refresh_stock_closing_prices.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>17</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of/outputs/refresh.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/merlyviamualim/Documents/Codex/2026-05-07/code-and-create-a-table-of/outputs/refresh.err.log</string>
+</dict>
+</plist>
